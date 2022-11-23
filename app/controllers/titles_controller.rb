@@ -38,6 +38,54 @@ class TitlesController < ApplicationController
     @title.destroy
   end
 
+  def import_csv
+    errors = []
+    file = params['csv'].tempfile.path
+    File.open(file).each do |row|
+      begin
+        row = row.split(',')
+        next if row[0] == "show_id"
+        show_id = row[0].strip rescue row[0]
+        type = row[1].strip rescue row[1]
+        title = row[2].strip rescue row[2]
+        director = row[3].strip rescue row[3]
+        cast = row[4].strip rescue row[4]
+        country = row[5].strip rescue row[5]
+        date_added = row[6].strip rescue row[6]
+        release_year = row[7].strip rescue row[7]
+        rating = row[8].strip rescue row[8]
+        duration = row[9].strip rescue row[9]
+        listed_in = row[10].strip rescue row[10]
+        description = row[11].strip rescue row[11]
+
+        Title.create(
+          show_id: show_id,
+          type: type,
+          title: title,
+          director: director,
+          cast: cast,
+          country: country,
+          date_added: date_added,
+          release_year: release_year,
+          rating: rating,
+          duration: duration,
+          listed_in: listed_in,
+          description: description
+        )
+      rescue => exception
+        errors << err.message
+      end
+    end
+
+    if errors.blank?
+      flash[:success] = "Importado com sucesso!"
+    else
+      flash[:error] = errors.join(', ')
+    end
+
+    redirect_to "/titles"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_title
