@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   resources :titles
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  post 'titles/import_csv', to: 'titles#import_csv'
 end
