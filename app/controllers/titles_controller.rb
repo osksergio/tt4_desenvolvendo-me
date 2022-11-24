@@ -1,5 +1,6 @@
 class TitlesController < ApplicationController
   before_action :set_title, only: [:show, :update, :destroy]
+  #skip_before_action :verify_authenticity_token
 
   # GET /titles
   def index
@@ -44,7 +45,7 @@ class TitlesController < ApplicationController
     File.open(file).each do |row|
       begin
         row = row.split(',')
-        next if row[0] == "show_id"
+        next if row[0] == 'show_id'
         show_id = row[0].strip rescue row[0]
         type = row[1].strip rescue row[1]
         title = row[2].strip rescue row[2]
@@ -58,21 +59,10 @@ class TitlesController < ApplicationController
         listed_in = row[10].strip rescue row[10]
         description = row[11].strip rescue row[11]
 
-        Title.create(
-          show_id: show_id,
-          type: type,
-          title: title,
-          director: director,
-          cast: cast,
-          country: country,
-          date_added: date_added,
-          release_year: release_year,
-          rating: rating,
-          duration: duration,
-          listed_in: listed_in,
-          description: description
-        )
-      rescue => exception
+        Title.create( show_id: show_id, type: type, title: title, director: director, cast: cast,
+          country: country, date_added: date_added, release_year: release_year, rating: rating,
+          duration: duration, listed_in: listed_in, description: description )
+      rescue Exception => err
         errors << err.message
       end
     end
@@ -85,7 +75,7 @@ class TitlesController < ApplicationController
       #flash[:error] = errors.join(', ')
     end
 
-    redirect_to "/titles"
+    redirect_to '/titles'
   end
 
   private
