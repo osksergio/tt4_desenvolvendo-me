@@ -78,9 +78,11 @@ class TitlesController < ApplicationController
     end
 
     if errors.blank?
-      flash[:success] = "Importado com sucesso!"
+      #flash[:success] = "Importado com sucesso!"
+      format.json { render json: { first_message: "Arquivo CSV importado com sucesso!" }, status: :ok }
     else
-      flash[:error] = errors.join(', ')
+      format.json { render json: errors.join(', '), status: :unprocessable_entity }
+      #flash[:error] = errors.join(', ')
     end
 
     redirect_to "/titles"
