@@ -39,6 +39,10 @@ class TitlesController < ApplicationController
     @title.destroy
   end
 
+  def method_test
+    format.json { render json: { message: "Deu certo (teste)!" }, status: :ok }
+  end
+
   def import_csv
     errors = []
     file = params['csv'].tempfile.path
