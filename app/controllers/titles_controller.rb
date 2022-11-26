@@ -40,12 +40,13 @@ class TitlesController < ApplicationController
   end
 
   def method_test
-    format.json { render json: { message: "Deu certo (teste)!" }, status: :ok }
+    render json: { message: 'Deu certo!'}
   end
 
   def import_csv
     errors = []
-    file = params['csv'].tempfile.path
+    file = params['csv']
+    #file = params['csv'].tempfile.path
     File.open(file).each do |row|
       begin
         row = row.split(',')
@@ -72,11 +73,9 @@ class TitlesController < ApplicationController
     end
 
     if errors.blank?
-      #flash[:success] = "Importado com sucesso!"
       format.json { render json: { first_message: "Arquivo CSV importado com sucesso!" }, status: :ok }
     else
-      format.json { render json: errors.join(', '), status: :unprocessable_entity }
-      #flash[:error] = errors.join(', ')
+      format.json { render json: { first_message: errors.join(', ') }, status: :unprocessable_entity }
     end
 
     redirect_to '/titles'
