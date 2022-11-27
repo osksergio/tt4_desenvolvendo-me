@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :title do
     show_id { "MyString" }
-    type { "" }
+    type_title { "" }
     title { "MyString" }
     director { "MyString" }
     cast { "MyString" }
@@ -10,7 +10,7 @@ FactoryBot.define do
     release_year { 1 }
     rating { "MyString" }
     duration { "MyString" }
-    liste_in { "MyString" }
+    listed_in { "MyString" }
     description { "MyString" }
   end
 end

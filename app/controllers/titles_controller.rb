@@ -52,7 +52,7 @@ class TitlesController < ApplicationController
         row = row.split(',')
         next if row[0] == 'show_id'
         show_id = row[0].strip rescue row[0]
-        type = row[1].strip rescue row[1]
+        type_title = row[1].strip rescue row[1]
         title = row[2].strip rescue row[2]
         director = row[3].strip rescue row[3]
         cast = row[4].strip rescue row[4]
@@ -64,7 +64,7 @@ class TitlesController < ApplicationController
         listed_in = row[10].strip rescue row[10]
         description = row[11].strip rescue row[11]
 
-        Title.create( show_id: show_id, type: type, title: title, director: director, cast: cast,
+        Title.create( show_id: show_id, type_title: type_title, title: title, director: director, cast: cast,
           country: country, date_added: date_added, release_year: release_year, rating: rating,
           duration: duration, listed_in: listed_in, description: description )
       rescue Exception => err
@@ -90,6 +90,6 @@ class TitlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def title_params
-      params.require(:title).permit(:show_id, :type, :title, :director, :cast, :country, :date_added, :release_year, :rating, :duration, :listed_in, :description)
+      params.require(:title).permit(:show_id, :type_title, :title, :director, :cast, :country, :date_added, :release_year, :rating, :duration, :listed_in, :description)
     end
 end
