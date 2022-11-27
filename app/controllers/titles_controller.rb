@@ -75,10 +75,11 @@ class TitlesController < ApplicationController
     if errors.blank?
       format.json { render json: { first_message: "Arquivo CSV importado com sucesso!" }, status: :ok }
     else
-      format.json { render json: { first_message: errors.join(', ') }, status: :unprocessable_entity }
+      #format.json { render json: { first_message: errors.join(', ') }, status: :unprocessable_entity }
+      render json: { first_message: errors.join(', ') }, status: :unprocessable_entity
     end
 
-    redirect_to '/titles'
+    #redirect_to '/titles'
   end
 
   private
