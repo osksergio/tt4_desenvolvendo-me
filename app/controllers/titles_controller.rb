@@ -1,3 +1,5 @@
+require 'csv'
+
 class TitlesController < ApplicationController
   before_action :set_title, only: [:show, :update, :destroy]
   #skip_before_action :verify_authenticity_token
@@ -45,28 +47,35 @@ class TitlesController < ApplicationController
 
   def import_csv
     errors = []
-    file = params['csv']
-    #file = params['csv'].tempfile.path
-    File.open(file).each do |row|
+    file_param = params['csv']
+    file = File.open(file_param)
+    CSV.foreach(file, { headers: true, header_converters: :symbol, col_sep: ',', }) do |row|
+      #file.each do |row|
       begin
-        row = row.split(',')
-        next if row[0] == 'show_id'
-        show_id = row[0].strip rescue row[0]
-        type_title = row[1].strip rescue row[1]
-        title = row[2].strip rescue row[2]
-        director = row[3].strip rescue row[3]
-        cast = row[4].strip rescue row[4]
-        country = row[5].strip rescue row[5]
-        date_added = row[6].strip rescue row[6]
-        release_year = row[7].strip rescue row[7]
-        rating = row[8].strip rescue row[8]
-        duration = row[9].strip rescue row[9]
-        listed_in = row[10].strip rescue row[10]
-        description = row[11].strip rescue row[11]
+        #row = row.split(',')
+        #next if row[0] == 'show_id'
+        #show_id = row[0].strip rescue row[0]
+        #type_title = row[1].strip rescue row[1]
+        #title = row[2].strip rescue row[2]
+        #director = row[3].strip rescue row[3]
+        #cast = row[4].strip rescue row[4]
+        #country = row[5].strip rescue row[5]
+        #date_added = row[6].strip rescue row[6]
+        #release_year = row[7].strip rescue row[7]
+        #rating = row[8].strip rescue row[8]
+        #duration = row[9].strip rescue row[9]
+        #listed_in = row[10].strip rescue row[10]
+        #description = row[11].strip rescue row[11]
 
-        Title.create( show_id: show_id, type_title: type_title, title: title, director: director, cast: cast,
-          country: country, date_added: date_added, release_year: release_year, rating: rating,
-          duration: duration, listed_in: listed_in, description: description )
+        #Title.create( show_id: show_id, type_title: type_title, title: title, director: director, cast: cast,
+        #  country: country, date_added: date_added, release_year: release_year, rating: rating,
+        #  duration: duration, listed_in: listed_in, description: description )
+
+        Title.create( show_id: row[:show_id], type_title: row[:type], title: row[:title],
+                      director: row[:director], cast: row[:cast], country: row[:country],
+                      date_added: row[:date_added], release_year: row[:release_year],
+                      rating: row[:rating], duration: row[:duration], listed_in: row[:listed_in],
+                      description: row[:description] )
       rescue Exception => err
         errors << err.message
       end
@@ -75,7 +84,6 @@ class TitlesController < ApplicationController
     if errors.blank?
       format.json { render json: { first_message: "Arquivo CSV importado com sucesso!" }, status: :ok }
     else
-      #format.json { render json: { first_message: errors.join(', ') }, status: :unprocessable_entity }
       render json: { first_message: errors.join(', ') }, status: :unprocessable_entity
     end
 
