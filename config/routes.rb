@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :titles
+  post 'titles/import_csv', to: 'titles#import_csv'
+  get 'testing', to: 'titles#method_test'
+  post 'imp_csv', to: 'titles#import_csv'
 end
