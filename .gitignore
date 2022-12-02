@@ -32,3 +32,6 @@
 
 # IDE RubyMine
 .idea
+
+# Database
+db/schema.rb
