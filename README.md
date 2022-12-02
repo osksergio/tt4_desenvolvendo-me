@@ -1,11 +1,11 @@
-# README - Teste Técnico III
+# README - Teste Técnico IV
 - Mentoria: DesenvolvmendoMe
 - Missão: Primeira Vaga
-- Batalha: TT3 (Teste Técnico III)
+- Batalha: TT4 (Teste Técnico IV)
 - Autor: Sergio Oseko (https://github.com/osksergio)
 - Mentor: Marco Castro
 
-Abaixo estão as tecnologias utilizadas neste projeto TT3:
+Abaixo estão as tecnologias utilizadas neste projeto TT4:
 
 * Ruby 3.1.2
 * Rails 6.1.7
